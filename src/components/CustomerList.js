@@ -3,6 +3,8 @@ import ReactTable from 'react-table';
 import 'react-table/react-table.css'; 
 import AddCustomer from './AddCustomer';
 import EditCustomer from './EditCustomer';
+import Button from "@material-ui/core/Button";
+import AddTraining from './AddTraining';
 
 export default function CustomerList () {
     const[customers, setCustomers] = useState([]);
@@ -31,6 +33,18 @@ export default function CustomerList () {
         .catch(err => console.error(err))
         .then(res => setMessage('Customer saved and added!'))
     };
+    const saveTraining = (newTraining) => {
+        fetch("https://customerrest.herokuapp.com/api/trainings", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify(newTraining)
+        })
+        .then(res => fetchData())
+        .catch(err => console.error(err))
+        .then(res => setMessage('Training saved and added!'))
+    };
     const editCustomer = (link, editedCustomer) => {
         fetch(link, {
             method: "PUT",
@@ -41,7 +55,18 @@ export default function CustomerList () {
         })
         .then(res => fetchData())
         .then(res => setMessage('Customer edited!'))
-        .catch(err => console.error(err))
+        .catch(err => console.error(err));
+        console.log(link); 
+    };
+    const deleteCustomer = customerLink => {
+        if(window.confirm('Are you sure?')) {
+        fetch(customerLink, { method: "DELETE" })
+        .then(res => fetchData())
+        .then(res => setOpen(true)) 
+        .then(res => setMessage('Car deleted!'))
+        .catch(err=> console.error(err));
+        console.log(customerLink); 
+        }
     };
 
     const columns = [
@@ -52,8 +77,14 @@ export default function CustomerList () {
         { Header: 'City', accessor: 'city'},
         { Header: 'Email', accessor: 'email'},
         { Header: 'Phone', accessor: 'phone'},
-        { accessor: 'links[0].href',
+        { Header: 'Edit', accessor: 'links[0].href',
           Cell: ({value, row}) => <EditCustomer editCustomer={editCustomer} link={value} clickedCustomer={row}/>},
+        { Header: 'Add training', accessor: 'links[0].href',
+          Cell: ({value, row}) => <AddTraining saveTraining={saveTraining} link={value} clickedCustomer={row}/>},
+        //delete, Value is Accessor
+        { Header: "Delete", accessor: 'links[0].href', width: 100,
+          Cell: ({value}) => <Button variant="contained" size= "small" color="secondary" onClick={() => deleteCustomer(value)}>Delete</Button>
+      },
     ]
 
     return (

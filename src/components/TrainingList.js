@@ -2,9 +2,11 @@ import React, {useState, useEffect} from 'react';
 import ReactTable from 'react-table';
 import 'react-table/react-table.css'; 
 import Moment from "react-moment";
+import Button from "@material-ui/core/Button";
 
 export default function TrainingList () {
     const[trainings, setTrainings] = useState([]);
+    const[message, setMessage] = useState(''); 
 
     useEffect(() => {
         fetchData();
@@ -17,6 +19,16 @@ export default function TrainingList () {
         .catch(err => console.error(err))
     };
 
+    const deleteTraining = trainingLink => {
+        if(window.confirm('Are you sure?')) {
+            fetch(trainingLink, {method: "DELETE"})
+            .then(res => fetchData())
+            .then(res => setMessage('Training deleted!'))
+            .catch(err => console.log(err)); 
+        }
+    }
+   
+
     const columns = [
         { Header: 'Date', 
           accessor: 'date',
@@ -26,6 +38,9 @@ export default function TrainingList () {
         { Header: 'Duration', accessor: 'duration'},
         { Header: 'Activity', accessor: 'activity'},
         { Header: 'Content', accessor: 'content'},
+        { Header: 'Delete', accessor: 'links[0].href',
+       Cell: ({value}) => <Button variant="contained" size= "small" color="secondary" 
+       onClick={() => deleteTraining(value)}>Delete</Button>},
     ]
 
     return (

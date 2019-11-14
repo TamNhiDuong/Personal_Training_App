@@ -22,7 +22,6 @@ class App extends Component {
 //using local state to store user's session
     this.state = {
       authUser: null,
-      isValid: false,
     }; 
   }
   componentDidMount() {
@@ -34,17 +33,13 @@ class App extends Component {
   componentWillUnmount() {
     this.listener(); 
   }
-  isInvalidUser = () => {
-    if (this.state.authUser) {
-      this.setState({isValid: true}); 
-    }
-  } 
+
   render() {
     return (
       <div className="App">
         <header id= 'content' className="App-header">
         <p id='main'>Personal Training App  </p>
-        <span> <SignOutButton disabled={this.state.isValid}/> </span>
+        <span> <SignOutButton/> </span>
        </header> 
     <BrowserRouter>
       <div>

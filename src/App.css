@@ -1,20 +1,32 @@
 .App {
   text-align: center;
 }
-
-.App-logo {
-  height: 40vmin;
+body {
+  font-family: 'Gothic A1', sans-serif;
+}
+#content {
+  padding-top: 100px; 
+}
+#main {
+  font-size: 40px;
 }
 
 .App-header {
-  background-color: #282c34;
-  min-height: 10vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+    position: relative;
+    background: linear-gradient( rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.9) ),url("../src/images/personal-trainer-2.jpg");
+    background-size: cover;
+    background-position: center;
+    width: 100%;
+    height: 70%;
+    min-height: 290px;
+    color: white;
+    background-attachment: fixed;
+}
+@media screen and (min-width: 768px) {
+  .navbar {
+  background: transparent;
+  border-color: transparent;
+ }
 }
 
 .App-link {

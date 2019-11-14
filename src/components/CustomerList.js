@@ -5,6 +5,7 @@ import AddCustomer from './AddCustomer';
 import EditCustomer from './EditCustomer';
 import Button from "@material-ui/core/Button";
 import AddTraining from './AddTraining';
+import { Snackbar } from '@material-ui/core';
 
 export default function CustomerList () {
     const[customers, setCustomers] = useState([]);
@@ -68,6 +69,13 @@ export default function CustomerList () {
         console.log(customerLink); 
         }
     };
+    //Snackbar functions
+  const handleClose = (event, reason) => {
+    if (reason === 'clickaway') {
+      return;
+    }
+    setOpen(false);
+  };
 
     const columns = [
         { Header: 'Firstname', accessor: 'firstname'},
@@ -79,7 +87,7 @@ export default function CustomerList () {
         { Header: 'Phone', accessor: 'phone'},
         { Header: 'Edit', accessor: 'links[0].href',
           Cell: ({value, row}) => <EditCustomer editCustomer={editCustomer} link={value} clickedCustomer={row}/>},
-        { Header: 'Add training', accessor: 'links[0].href',
+        { Header: 'Add trainings', accessor: 'links[0].href',
           Cell: ({value, row}) => <AddTraining saveTraining={saveTraining} link={value} clickedCustomer={row}/>},
         //delete, Value is Accessor
         { Header: "Delete", accessor: 'links[0].href', width: 100,
@@ -95,6 +103,11 @@ export default function CustomerList () {
               columns={columns}
               filterable={true} 
               sortable={true}/> 
+             <Snackbar
+              open={open}
+              autoHideDuration= {3000}
+              onClose={handleClose}
+              message={message}/>
 
 
         </div>

@@ -10,7 +10,7 @@ const Navigation = ({authUser}) => (
 )
 const NavigationAuth = props => (
    //Boosstrap
-   <nav className="navbar navbar-expand-lg navbar-light bg-light">
+   <nav className="navbar navbar-expand-lg navbar-dark bg-dark">
    <Link className="navbar-brand" to="/">HomePage</Link>
 
 
@@ -46,7 +46,7 @@ aria-expanded="false" aria-label="Toggle navigation">
        
 const NavigationNonAuth = () => (
        //Boosstrap
-       <nav className="navbar navbar-expand-lg navbar-light bg-light">
+       <nav className="navbar navbar-expand-lg navbar-dark bg-dark">
        <Link className="navbar-brand" to="/">HomePage</Link>
     
 

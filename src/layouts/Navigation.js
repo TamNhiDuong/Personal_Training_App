@@ -1,12 +1,16 @@
 import React from 'react';
 import { Link } from "react-router-dom"; 
 import"bootstrap/dist/css/bootstrap.min.css";
-//Use Sign out button here
-import SignOutButton from '../components/SignOut'; 
+import { AuthUserContext } from '../session'; 
 
-
-const Navigation = ({authUser}) => (
-  <div>{authUser ? <NavigationAuth/>: <NavigationNonAuth/>}</div>
+const Navigation = () => (
+  <div>
+    <AuthUserContext.Consumer>
+    {authUser => 
+       authUser ? <NavigationAuth/>: <NavigationNonAuth/>
+    }
+    </AuthUserContext.Consumer>
+  </div>
 )
 const NavigationAuth = props => (
    //Boosstrap

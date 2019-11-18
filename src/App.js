@@ -1,4 +1,4 @@
-import React, {Component} from 'react';
+import React from 'react';
 import './App.css';
 import CustomerList from './components/CustomerList';
 import TrainingList from './components/TrainingList'; 
@@ -12,39 +12,20 @@ import PasswordForget from './components/PasswordForget';
 import SignIn from './components/SignIn';
 import SignOut from './components/SignOut';
 import SignUp from './components/SignUp'; 
-import {withFirebase} from '../src/authentication'; 
+import {withAuthentication} from '../src/session'; 
 import SignOutButton from '../src/components/SignOut'; 
 
 
-class App extends Component {
-  constructor(props) {
-    super(props);
-//using local state to store user's session
-    this.state = {
-      authUser: null,
-    }; 
-  }
-  componentDidMount() {
-    this.listener = this.props.firebase.auth.onAuthStateChanged(authUser => {
-      authUser ? this.setState({authUser}) : this.setState({authUser: null}); 
-    },
-    ); 
-  }
-  componentWillUnmount() {
-    this.listener(); 
-  }
-
-  render() {
-    return (
-      <div className="App">
+const App = () => (
+  <div className="App">
         <header id= 'content' className="App-header">
         <p id='main'>Personal Training App  </p>
         <span> <SignOutButton/> </span>
        </header> 
-    <BrowserRouter>
+
+       <BrowserRouter>
       <div>
-        <Navigation authUser={this.state.authUser}/>
-  
+        <Navigation />
         <Switch>
         <Route path="/" exact component={HomePage} />
         <Route path="/customers" component={CustomerList} />
@@ -57,13 +38,9 @@ class App extends Component {
         <Route path="/signup" component={SignUp} />
         <Route render={() => <h1>Page not found</h1>} />
         </Switch>
-        
       </div>
-    </BrowserRouter>
-    </div>
-    );
-  }
-  }
-  
+      </BrowserRouter>
+    </div> 
+); 
 
-export default withFirebase(App);
+export default withAuthentication(App);

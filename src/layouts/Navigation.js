@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import"bootstrap/dist/css/bootstrap.min.css";
 import { AuthUserContext } from '../session'; 
 
+
 const Navigation = () => (
   <div>
     <AuthUserContext.Consumer>
@@ -38,11 +39,12 @@ aria-expanded="false" aria-label="Toggle navigation">
    <Link className="nav-link" to="/calendar/">Calendar</Link>
  </li>
  <li className="nav-item">
-   <Link className="nav-link" to="/signin/">SignIn</Link>
- </li>
- <li className="nav-item">
    <Link className="nav-link" to="/signup/">SignUp</Link>
  </li>
+ <li className="nav-item">
+   <Link className="nav-link" to="/admin/">Admin</Link>
+ </li>
+ 
 </ul>
 </div>
 </nav>

@@ -14,7 +14,7 @@ import SignOut from './components/SignOut';
 import SignUp from './components/SignUp'; 
 import {withAuthentication} from '../src/session'; 
 import SignOutButton from '../src/components/SignOut'; 
-
+import Admin from '../src/components/Admin'; 
 
 const App = () => (
   <div className="App">
@@ -36,6 +36,7 @@ const App = () => (
         <Route path="/signin" component={SignIn} />
         <Route path="/signout" component={SignOut} />
         <Route path="/signup" component={SignUp} />
+        <Route path="/admin" component={Admin} />
         <Route render={() => <h1>Page not found</h1>} />
         </Switch>
       </div>

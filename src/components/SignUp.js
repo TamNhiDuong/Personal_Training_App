@@ -4,18 +4,16 @@ import {Link, withRouter} from 'react-router-dom';
 import {compose} from 'recompose'; 
 
 import {withFirebase} from '../authentication'; 
-import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import TextField from '@material-ui/core/TextField';
-import FormControlLabel from '@material-ui/core/FormControlLabel';
-import Checkbox from '@material-ui/core/Checkbox';
 import Grid from '@material-ui/core/Grid';
-import Box from '@material-ui/core/Box';
-import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
+
+import {SignInLink} from '../components/SignIn'; 
+
 
 const useStyles = makeStyles(theme => ({
   '@global': {
@@ -45,6 +43,7 @@ const useStyles = makeStyles(theme => ({
 const SignUpPage = () => (
   <div>
     <SignUpForm/>
+    <SignInLink/>
   </div>
 );
 const INITIAL_STATE = {
@@ -64,7 +63,16 @@ class SignUpFormBase extends Component {
     const {username, email, passwordOne} = this.state;
     this.props.firebase
     .doCreateUserWithEmailAndPassword(email, passwordOne)
+    //Create a user in Firebase realtime DB
     .then(authUser => {
+      return this.props.firebase
+      .user(authUser.user.uid)
+      .set({
+        username,
+        email,
+      }); 
+    })
+    .then(()=> {
       this.setState({...INITIAL_STATE});
       //Redirect to home
       this.props.history.push('/');
@@ -164,14 +172,6 @@ class SignUpFormBase extends Component {
 
           {error && <p>{error.message}</p>}
 
-          <Grid container justify="flex-end">
-            <Grid item>
-              <Link className="nav-link" to="/signin/">
-                Already have an account? Sign in
-              </Link>
-            </Grid>
-          </Grid>
-
           </Grid>
         </form>
         </div>
@@ -183,6 +183,7 @@ class SignUpFormBase extends Component {
 const SignUpLink = () => (
   <p><Link className="nav-link" to="/signup/">Don't have an account? SignUp</Link> </p>
 );
+
 //Router package offer higher-order component=> router properties accessible in the props of component
 //npm install recompose
 

@@ -1,10 +1,11 @@
 import React, { Component } from 'react';
-import { withRouter } from 'react-router-dom';
 import { compose } from 'recompose';
 
 import { SignUpLink } from '../components/SignUp';
 import { withFirebase } from '../authentication';
 
+import Grid from '@material-ui/core/Grid';
+import {Link, withRouter} from 'react-router-dom'; 
 import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import TextField from '@material-ui/core/TextField';
@@ -13,6 +14,10 @@ import Checkbox from '@material-ui/core/Checkbox';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
+import {PasswordForgetLink} from '../components/PasswordForget'; 
+import {PasswordChangeLink} from '../components/PasswordChange'; 
+
+
 
 const useStyles = makeStyles(theme => ({
   '@global': {
@@ -44,6 +49,8 @@ const SignInPage = () => (
   <div>
     <SignInForm />
     <SignUpLink />
+    <PasswordForgetLink/>
+    <PasswordChangeLink/>
   </div>
 );
 
@@ -135,6 +142,11 @@ class SignInFormBase extends Component {
     );
   }
 }
+const SignInLink = () => (
+    <Link className="nav-link" to="/signin/">
+      Already have an account? Sign in
+    </Link>
+)
 
 const SignInForm = compose(
   withRouter,
@@ -143,4 +155,4 @@ const SignInForm = compose(
 
 export default SignInPage;
 
-export { SignInForm, SignUpLink };
+export { SignInForm, SignUpLink, SignInLink };
